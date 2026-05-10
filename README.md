@@ -30,7 +30,7 @@ This implementation demonstrates a complete GitOps workflow using ArgoCD on Amaz
 The architecture consists of three main layers: 
 - **Infrastructure Layer** (Terraform-managed AWS resources) - The infrastructure layer provisions a secure VPC with public and private subnets across multiple availability zones, an EKS cluster with managed node groups, and an NGINX Ingress Controller exposed via AWS Network Load Balancer.
 
-- **Platform Layer** (Kubernetes services and ArgoCD) - The platform layer deploys ArgoCD server with custom ingress configuration for web UI access, implements the App-of-Apps pattern for centralized application management, and establishes Route53 DNS records for both ArgoCD (`argocd.chinmayto.com`) and applications (`app.chinmayto.com`).
+- **Platform Layer** (Kubernetes services and ArgoCD) - The platform layer deploys ArgoCD server with custom ingress configuration for web UI access, implements the App-of-Apps pattern for centralized application management, and establishes Route53 DNS records for both ArgoCD (`argocd.venrampal.com`) and applications (`app.venrampal.com`).
 
 - **Application Layer** (containerized workloads) - The application layer showcases a sample Node.js application deployed via GitOps, demonstrating automated synchronization, self-healing capabilities, and ingress-based external access. 
 
@@ -63,8 +63,8 @@ This architecture enables teams to achieve Infrastructure as Code through Terraf
 │                                                              │
 │  ┌──────────────────────────────────────────────────────────┐│
 │  │                   Route53                                ││
-│  │  argocd.chinmayto.com → NGINX Ingress NLB                ││
-│  │  app.chinmayto.com → NGINX Ingress NLB                   ││
+│  │  argocd.venrampal.com → NGINX Ingress NLB                ││
+│  │  app.venrampal.com → NGINX Ingress NLB                   ││
 │  └──────────────────────────────────────────────────────────┘│
 └──────────────────────────────────────────────────────────────┘
 
@@ -332,7 +332,7 @@ variable "argocd_chart_version" {
 variable "argocd_hostname" {
   description = "Hostname for ArgoCD ingress"
   type        = string
-  default     = "argocd.chinmayto.com"
+  default     = "argocd.venrampal.com"
 }
 
 variable "argocd_admin_password" {
@@ -345,7 +345,7 @@ variable "argocd_admin_password" {
 variable "domain_name" {
   description = "Domain name for the hosted zone"
   type        = string
-  default     = "chinmayto.com"
+  default     = "venrampal.com"
 }
 
 variable "argocd_subdomain" {
@@ -490,12 +490,12 @@ Define an ArgoCD project to manage application deployments:
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: chinmayto-apps
+  name: venrampal-apps
   namespace: argocd
 spec:
-  description: Project for chinmayto applications
+  description: Project for venrampal applications
   sourceRepos:
-    - 'https://github.com/chinmayto/terraform-aws-eks-argocd.git'
+    - 'https://github.com/venrampal/terraform-aws-eks-argocd.git'
   destinations:
     - namespace: '*'
       server: https://kubernetes.default.svc
@@ -521,7 +521,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/chinmayto/terraform-aws-eks-argocd.git
+    repoURL: https://github.com/venrampal/terraform-aws-eks-argocd.git
     targetRevision: HEAD
     path: argocd
   destination:
@@ -545,9 +545,9 @@ metadata:
   name: nodejs-app
   namespace: argocd
 spec:
-  project: chinmayto-apps
+  project: venrampal-apps
   source:
-    repoURL: https://github.com/chinmayto/terraform-aws-eks-argocd.git
+    repoURL: https://github.com/venrampal/terraform-aws-eks-argocd.git
     targetRevision: HEAD
     path: k8s-manifests
   destination:
@@ -604,7 +604,7 @@ kubectl apply -f argocd/app-of-apps.yaml
 
 ## Testing
 
-Accessing argocd using the domain: http://argocd.chinmayto.com
+Accessing argocd using the domain: http://argocd.venrampal.com
 
 ![alt text](/images/argocd_1.png)
 
@@ -680,7 +680,7 @@ kubectl get applications -n argocd
 kubectl get appprojects -n argocd
 
 # Only delete the custom project, NEVER delete default project
-kubectl delete appproject chinmayto-apps -n argocd
+kubectl delete appproject venrampal-apps -n argocd
 
 # Verify only custom project is deleted (default should remain)
 kubectl get appprojects -n argocd
@@ -707,6 +707,6 @@ The GitOps approach with ArgoCD provides numerous benefits including improved de
 
 ## References and Further Reading
 
-- **GitHub Repository**: [terraform-aws-eks-argocd](https://github.com/chinmayto/terraform-aws-eks-argocd)
+- **GitHub Repository**: [terraform-aws-eks-argocd](https://github.com/venrampal/terraform-aws-eks-argocd)
 - **ArgoCD Documentation**: [https://argo-cd.readthedocs.io/](https://argo-cd.readthedocs.io/)
 
