@@ -85,7 +85,7 @@ resource "aws_route53_record" "argocd" {
 
   alias {
     name                   = data.kubernetes_service.nginx_ingress_controller.status.0.load_balancer.0.ingress.0.hostname
-    zone_id                = "Z24AGWAEPR013L" # NLB zone ID for us-west-2
+    zone_id                = "Z18D5FSROUN65G" # NLB zone ID for us-west-2
     evaluate_target_health = true
   }
 
