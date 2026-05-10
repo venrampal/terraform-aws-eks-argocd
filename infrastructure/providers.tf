@@ -16,9 +16,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket                     = "chinmayto-terraform-state-bucket-1755526674"
+    bucket                     = "venrampal-terraform-state-bucket-367553824750"
     key                        = "eks-cluster-argocd/terraform.tfstate"
-    region                     = "us-east-1"
+    region                     = "us-west-2"
     encrypt                    = true
     use_lockfile               = true
     skip_requesting_account_id = false

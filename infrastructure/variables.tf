@@ -1,13 +1,13 @@
 variable "aws_region" {
   description = "AWS region"
   type        = string
-  default     = "us-east-1"
+  default     = "us-west-2"
 }
 
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "CT-EKS-Cluster"
+  default     = "EKS-Cluster"
 }
 
 variable "cluster_version" {
@@ -51,15 +51,11 @@ variable "argocd_chart_version" {
   default     = "5.51.6"
 }
 
-
-
 variable "argocd_hostname" {
   description = "Hostname for ArgoCD ingress"
   type        = string
-  default     = "argocd.chinmayto.com"
+  default     = "argocd.skyberian.com"
 }
-
-
 
 variable "argocd_admin_password" {
   description = "Custom admin password for ArgoCD (leave empty for auto-generated)"
@@ -74,7 +70,7 @@ variable "argocd_admin_password" {
 variable "domain_name" {
   description = "Domain name for the hosted zone"
   type        = string
-  default     = "chinmayto.com"
+  default     = "skyberian.com"
 }
 
 variable "argocd_subdomain" {

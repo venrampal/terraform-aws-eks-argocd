@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: chinmayto-apps
+  name: venrampal-apps
   namespace: argocd
 spec:
-  description: Project for chinmayto applications
+  description: Project for venrampal applications
   sourceRepos:
-    - 'https://github.com/chinmayto/terraform-aws-eks-argocd.git'
+    - 'https://github.com/venrampal/terraform-aws-eks-argocd.git'
   destinations:
     - namespace: '*'
       server: https://kubernetes.default.svc
